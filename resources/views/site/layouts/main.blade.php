@@ -46,6 +46,7 @@
     <link href="{{asset('css/iziToast.min.css') }}"  rel="stylesheet"> 
     <link href="{{asset('vendors/flatpicker/flatpickr.min.css')}}"  rel="stylesheet">
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     {{-- <link rel="stylesheet" href="iziToast.min.css"/> --}}
 
 
@@ -132,6 +133,8 @@
     <script src="{{asset('js/iziToast.min.js')}}"></script>
     <script src="{{asset('assets/site/fullcalendar/dist/fullcalendar.min.js')}}"></script> 
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 
         @yield('scripts')
     </body>

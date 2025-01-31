@@ -1,3 +1,12 @@
+@extends('site/layouts/main')
+
+
+@stop
+
+
+@section('content')
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,6 +55,7 @@
             padding: 20px;
             border-bottom: 3px solid #007bff;
             flex-wrap: wrap;
+            color:white;
         }
 
         /* Left Section (Logo & Form Label) */
@@ -217,7 +227,7 @@
         <div class="header-container">
             <!-- Left Section: Logo & Form Label -->
             <div class="header-left">
-                <img src="{{ asset('assets/img/gallery/asclogo.png') }}" alt="ASC Logo" class="img-fluid logo">
+                <img src="{{ asset('assets/img/gallery/asclogo.png') }}" alt="ASC Logo" class="img-fluid logo" style="width: 50%;">
                 <div class="form-label">Guidance Form 1</div>
             </div>
 
@@ -250,7 +260,8 @@
 
 
         <div class="mt-5">
-            <form id="studentForm">
+            <form id="studentForm" autocomplete="off">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <!-- PERSONAL BACKGROUND SECTION -->
                             <div class="card mb-4 shadow-sm">
                                 <div class="card-header bg-primary text-white">
@@ -261,22 +272,22 @@
                                         <!-- First Name -->
                                         <div class="col-md-3 mb-3">
                                             <label class="form-label" for="firstName">First Name</label>
-                                            <input type="text" id="firstName" class="form-control shadow-sm rounded" required />
+                                            <input type="text" id="firstName" class="form-control shadow-sm rounded" name="first_name" id="first_name" />
                                         </div>
                                         <!-- Last Name -->
                                         <div class="col-md-3 mb-3">
                                             <label class="form-label" for="lastName">Last Name</label>
-                                            <input type="text" id="lastName" class="form-control shadow-sm rounded" required />
+                                            <input type="text" id="lastName" class="form-control shadow-sm rounded" name="last_name" id="last_name" />
                                         </div>
                                         <!-- Middle Name -->
                                         <div class="col-md-3 mb-3">
                                             <label class="form-label" for="middleName">Middle Name</label>
-                                            <input type="text" id="middleName" class="form-control shadow-sm rounded" required />
+                                            <input type="text" id="middleName" class="form-control shadow-sm rounded" name="middle_name" id="middle_name" />
                                         </div>
                                         <!-- Date -->
                                         <div class="col-md-3 mb-3">
-                                            <label class="form-label" for="studentDate">Date</label>
-                                            <input type="date" id="studentDate" class="form-control shadow-sm rounded" required />
+                                            <label class="form-label" for="studentDate" class="today_date" id="today_date">Date</label>
+                                            <input type="date" id="studentDate" class="form-control shadow-sm rounded" name="today_date" id="today_date" />
                                         </div>
                                     </div>
                         
@@ -284,20 +295,25 @@
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label" for="address">Address</label>
-                                                <input type="text" id="address" class="form-control shadow-sm rounded" required />
+                                                <label class="form-label" for="address" >Address</label>
+                                                <input type="text" id="address" class="form-control shadow-sm rounded" name="address" id="address" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="placeOfBirth">Place of Birth</label>
-                                                <input type="text" id="placeOfBirth" class="form-control shadow-sm rounded" required />
+                                                <input type="text" id="placeOfBirth" class="form-control shadow-sm rounded"  name="place_of_birth" id="place_of_birth" />
                                             </div>
                                             <div class="mb-3">
-                                                <label class="form-label" for="Studentreligion">Religion</label>
-                                                <input type="text" id="Studentreligion" class="form-control shadow-sm rounded" required />
+                                                <label class="form-label" for="Studentreligion" class="religion" id="religion">Religion</label>
+                                                <select name="religion_id" id="religion_id" class="form-control">
+                                                    <option value="0">--Select--</option>
+                                                    @foreach ($religion_list as $religion)
+                                                        <option value="{{ $religion->id }}">{{ $religion->religion_name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="studentEmail">Email Address</label>
-                                                <input type="email" id="studentEmail" class="form-control shadow-sm rounded" required />
+                                                <input type="email" id="studentEmail" class="form-control shadow-sm rounded" name="student_email" id="student_email" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -306,30 +322,41 @@
                                                 <label class="form-label">Sex</label>
                                                 <div class="d-flex">
                                                     <div class="form-check me-3">
-                                                        <input class="form-check-input" type="radio" name="sex" id="male" value="male" required />
+                                                        <input class="form-check-input" type="radio" name="gender_id" id="gender_id" value="1"/>
                                                         <label class="form-check-label" for="male">Male</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="sex" id="female" value="female" required />
+                                                        <input class="form-check-input" type="radio" name="gender_id" id="gender_id" value="2" />
                                                         <label class="form-check-label" for="female">Female</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="civilStatus">Civil Status</label>
-                                                <input type="text" id="civilStatus" class="form-control shadow-sm rounded" required />
+                                                <select name="civil_status_id" id="civil_status_id" class="form-control">
+                                                    <option value="0">--Select--</option>
+                                                    @foreach ($civil_status_list as $civil_status)
+                                                        <option value="{{ $civil_status->id }}">{{ $civil_status->civil_status_name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="dateOfBirth">Date of Birth</label>
-                                                <input type="date" id="dateOfBirth" class="form-control shadow-sm rounded" required />
+                                                <input type="date" id="dateOfBirth" class="form-control shadow-sm rounded" name="birthdate" id="birthdate" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="citizenship">Citizenship</label>
-                                                <input type="text" id="citizenship" class="form-control shadow-sm rounded" required />
+                                                {{-- <input type="text" id="citizenship" class="form-control shadow-sm rounded" /> --}}
+                                                <select name="citizenship_id" id="citizenship_id" class="form-control">
+                                                    <option value="0">--Select--</option>
+                                                    @foreach ($citizenship_list as $citizenship)
+                                                        <option value="{{ $citizenship->id }}">{{ $citizenship->citizenship_name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="studentmobileNumber">Mobile Number</label>
-                                                <input type="tel" id="studentmobileNumber" class="form-control shadow-sm rounded" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required />
+                                                <input type="tel" id="studentmobileNumber" class="form-control shadow-sm rounded" pattern="[0-9]{3}[0-9]{3}[0-9]{4}"  name="student_mobile_no" id="student_mobile_no"  />
                                             </div>
                                         </div>
                                     </div>
@@ -341,11 +368,11 @@
                                                 <label class="form-label">Are you a working student?</label>
                                                 <div class="d-flex">
                                                     <div class="form-check me-3">
-                                                        <input class="form-check-input" type="radio" name="workingStudent" id="workingStudentYes" value="yes" required />
+                                                        <input class="form-check-input" type="radio" name="workingStudent" id="workingStudentYes" value="1" />
                                                         <label class="form-check-label" for="workingStudentYes">Yes</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="workingStudent" id="workingStudentNo" value="no" required />
+                                                        <input class="form-check-input" type="radio" name="workingStudent" id="workingStudentNo" value="0" />
                                                         <label class="form-check-label" for="workingStudentNo">No</label>
                                                     </div>
                                                 </div>
@@ -354,11 +381,11 @@
                                                 <label class="form-label">Are you a Scholar?</label>
                                                 <div class="d-flex">
                                                     <div class="form-check me-3">
-                                                        <input class="form-check-input" type="radio" name="scholar" id="scholarYes" value="yes" required />
+                                                        <input class="form-check-input" type="radio" name="scholar" id="scholarYes" value="1" />
                                                         <label class="form-check-label" for="scholarYes">Yes</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="scholar" id="scholarNo" value="no" required />
+                                                        <input class="form-check-input" type="radio" name="scholar" id="scholarNo" value="0" />
                                                         <label class="form-check-label" for="scholarNo">No</label>
                                                     </div>
                                                 </div>
@@ -367,11 +394,11 @@
                                                 <label class="form-label">Are you a single parent?</label>
                                                 <div class="d-flex">
                                                     <div class="form-check me-3">
-                                                        <input class="form-check-input" type="radio" name="singleParent" id="singleParentYes" value="yes" required />
+                                                        <input class="form-check-input" type="radio" name="singleParent" id="singleParentYes" value="1" />
                                                         <label class="form-check-label" for="singleParentYes">Yes</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="singleParent" id="singleParentNo" value="no" required />
+                                                        <input class="form-check-input" type="radio" name="singleParent" id="singleParentNo" value="0" />
                                                         <label class="form-check-label" for="singleParentNo">No</label>
                                                     </div>
                                                 </div>
@@ -380,21 +407,21 @@
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label" for="studentGuardian">If Yes, Who is your guardian?</label>
-                                                <input type="text" id="studentGuardian" class="form-control shadow-sm rounded" />
+                                                <input type="text" id="studentGuardian" class="form-control shadow-sm rounded" name="who_guardian" id="who_guardian" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="studentSponsor">If Yes, Who is your sponsor?</label>
-                                                <input type="text" id="studentSponsor" class="form-control shadow-sm rounded" />
+                                                <input type="text" id="studentSponsor" class="form-control shadow-sm rounded" name="who_sponsor" id="who_sponsor" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="studentChildren">If Yes, how many children do you have?</label>
-                                                <input type="number" id="studentChildren" class="form-control shadow-sm rounded" />
+                                                <input type="number" id="studentChildren" class="form-control shadow-sm rounded" name="many_children" id="many_children" />
                                             </div>
                                         </div>
 
                                         <div class="col-md-8">
                                             <label class="form-label" for="studentChildren">If married,name  of husband/wife</label>
-                                                <input type="text" id="studentChildren" class="form-control shadow-sm rounded" />
+                                                <input type="text" id="studentChildren" class="form-control shadow-sm rounded" name="married" id="married"  />
                                         </div>
                                     </div>
                                 </div>
@@ -411,62 +438,62 @@
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label" for="studentBrothers">No. of Brothers</label>
-                                                <input type="text" id="studentBrothers" class="form-control shadow-sm rounded" required />
+                                                <input type="text" id="studentBrothers" class="form-control shadow-sm rounded" name="no_bro" id="no_bro" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="fatherName">Father's Name</label>
-                                                <input type="text" id="fatherName" class="form-control shadow-sm rounded" required />
+                                                <input type="text" id="fatherName" class="form-control shadow-sm rounded" name="father_name" id="father_name" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="fatherAge">Age</label>
-                                                <input type="text" id="fatherAge" class="form-control shadow-sm rounded" required />
+                                                <input type="text" id="fatherAge" class="form-control shadow-sm rounded" name="father_age" id="father_age" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="fatherAddress">Home Address</label>
-                                                <input type="text" id="fatherAddress" class="form-control shadow-sm rounded" required />
+                                                <input type="text" id="fatherAddress" class="form-control shadow-sm rounded" name="father_address" id="father_address" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="fatherEducation">Educational Attainment</label>
-                                                <input type="text" id="fatherEducation" class="form-control shadow-sm rounded" required />
+                                                <input type="text" id="fatherEducation" class="form-control shadow-sm rounded" name="father_educational" id="father_educational" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="fatherOccupation">Occupation</label>
-                                                <input type="text" id="fatherOccupation" class="form-control shadow-sm rounded" required />
+                                                <input type="text" id="fatherOccupation" class="form-control shadow-sm rounded"  name="father_occupation" id="father_occupation" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="fatherMobile">Mobile Number</label>
-                                                <input type="text" id="fatherMobile" class="form-control shadow-sm rounded" required />
+                                                <input type="text" id="fatherMobile" class="form-control shadow-sm rounded" name="father_number" id="father_number"  />
                                             </div>
                                         </div>
                                         <!-- Mother's Information -->
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label" for="studentSister">No. of Sisters</label>
-                                                <input type="text" id="studentSister" class="form-control shadow-sm rounded" required />
+                                                <input type="text" id="studentSister" class="form-control shadow-sm rounded" name="no_sis" id="no_sis" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="motherName">Mother's Name</label>
-                                                <input type="text" id="motherName" class="form-control shadow-sm rounded" required />
+                                                <input type="text" id="motherName" class="form-control shadow-sm rounded" name="mother_name" id="mother_name"  />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="motherAge">Age</label>
-                                                <input type="text" id="motherAge" class="form-control shadow-sm rounded" required />
+                                                <input type="text" id="motherAge" class="form-control shadow-sm rounded" name="mother_age" id="mother_age" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="motherAddress">Home Address</label>
-                                                <input type="text" id="motherAddress" class="form-control shadow-sm rounded" required />
+                                                <input type="text" id="motherAddress" class="form-control shadow-sm rounded" name="mother_address" id="mother_address" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="motherEducation">Educational Attainment</label>
-                                                <input type="text" id="motherEducation" class="form-control shadow-sm rounded" required />
+                                                <input type="text" id="motherEducation" class="form-control shadow-sm rounded" name="mother_educational" id="mother_educational" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="motherOccupation">Occupation</label>
-                                                <input type="text" id="motherOccupation" class="form-control shadow-sm rounded" required />
+                                                <input type="text" id="motherOccupation" class="form-control shadow-sm rounded" name="mother_occupation" id="mother_occupation" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="motherMobile">Mobile Number</label>
-                                                <input type="text" id="motherMobile" class="form-control shadow-sm rounded" required />
+                                                <input type="text" id="motherMobile" class="form-control shadow-sm rounded" name="mother_number" id="mother_number" />
                                             </div>
                                         </div>
                                     </div>
@@ -491,33 +518,33 @@
                                         <tbody>
                                             <tr>
                                                 <td>Elementary</td>
-                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="School Name" id="elementaryName"></td>
-                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Like" id="elementarySubject"></td>
-                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Don't Like" id="elementarySubject"></td>
+                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="School Name" id="elementaryName" name="elem" id="elem"></td>
+                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Like" id="elementarySubject" name="elem_sub_like" id="elem_sub_like"></td>
+                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Don't Like" id="elementarySubject" name="elem_sub_not_like" id="elem_sub_not_like"></td>
                                             </tr>
                                             <tr>
                                                 <td>Junior High</td>
-                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="School Name" id="juniorHighName"></td>
-                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Like" id="juniorHighSubject"></td>
-                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Don't Like" id="juniorHighSubject"></td>
+                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="School Name" id="juniorHighName" name="jhs" id="jhs"></td>
+                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Like" id="juniorHighSubject" name="jhs_sub_like" id="jhs_sub_like"></td>
+                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Don't Like" id="juniorHighSubject" name="jhs_sub_not_like" id="jhs_sub_not_like"></td>
                                             </tr>
                                             <tr>
                                                 <td>Grade 11</td>
-                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="School Name" id="grade11Name"></td>
-                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Like" id="grade11Subject"></td>
-                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Don't Like" id="grade11Subject"></td>
+                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="School Name" id="grade11Name" name="g11" id="g11"></td>
+                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Like" id="grade11Subject" name="g11_sub_like" id="g11_sub_like"></td>
+                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Don't Like" id="grade11Subject" name="g11_sub_not_like" id="jhs_sub_not_like"></td>
                                             </tr>
                                             <tr>
                                                 <td>Grade 12</td>
-                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="School Name" id="grade12Name"></td>
-                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Like" id="grade12Subject"></td>
-                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Don't Like" id="grade12Subject"></td>
+                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="School Name" id="grade12Name" name="g12" id="g12"></td>
+                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Like" id="grade12Subject" name="g12_sub_like" id="g12_sub_like"></td>
+                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Don't Like" id="grade12Subject" name="g12_sub_not_like" id="g12_sub_not_like"></td>
                                             </tr>
                                             <tr>
                                                 <td>College</td>
-                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="School Name" id="collegeName"></td>
-                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Like" id="collegeSubject"></td>
-                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Don't Like" id="collegeSubject"></td>
+                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="School Name" id="collegeName" name="college" id="college"></td>
+                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Like" id="collegeSubject" name="college_sub_like" id="college_sub_like"></td>
+                                                <td><input type="text" class="form-control shadow-sm rounded" placeholder="Subject You Don't Like" id="collegeSubject"name="college_sub_not_like" id="college_sub_not_like"></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -531,22 +558,22 @@
                                         <tbody>
                                             <tr>
                                                 <td id="easiestSubjects">
-                                                    <input type="text" class="form-control shadow-sm rounded" placeholder="Enter easiest subjects">
+                                                    <input type="text" class="form-control shadow-sm rounded" placeholder="Enter easiest subjects" name="easiest" id="easiest">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td id="mostDifficultSubjects">
-                                                    <input type="text" class="form-control shadow-sm rounded" placeholder="Enter most difficult subjects">
+                                                    <input type="text" class="form-control shadow-sm rounded" placeholder="Enter most difficult subjects" name="most_diff_sub" id="most_diff_sub">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td itemid="lowestGrades">
-                                                    <input type="text" class="form-control shadow-sm rounded" placeholder="Enter subjects with lowest grade">
+                                                    <input type="text" class="form-control shadow-sm rounded" placeholder="Enter subjects with lowest grade" name="subj_lowest" id="subj_lowest">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td id="planAfterHighSchool">
-                                                    <input type="text" class="form-control shadow-sm rounded" placeholder="Enter plan after high school">
+                                                    <input type="text" class="form-control shadow-sm rounded" placeholder="Enter plan after high school" name="plan_after_hs" id="plan_after_hs">
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -557,18 +584,18 @@
                                         <tbody>
                                             <tr>
                                                 <td id="highestGrades">
-                                                    <input type="text" class="form-control shadow-sm rounded" placeholder="Enter subjects with highest grade">
+                                                    <input type="text" class="form-control shadow-sm rounded" placeholder="Enter subjects with highest grade" name="subj_highest_grade" id="subj_highest_grade">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td id="awards">
-                                                    <input type="text" class="form-control shadow-sm rounded" placeholder="Enter awards & honors">
+                                                    <input type="text" class="form-control shadow-sm rounded" placeholder="Enter awards & honors" name="award" id="award">
                                                 </td>
                                             </tr>
                                             
                                             <tr>
                                                 <td id="emergencyContact">
-                                                    <input type="text" class="form-control shadow-sm rounded" placeholder="Enter emergency contact">
+                                                    <input type="text" class="form-control shadow-sm rounded" placeholder="Enter emergency contact" name="emergency_contact" id="emergency_contact">
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -581,7 +608,9 @@
    
                         <!-- SUBMIT BUTTON -->
                         <div class="text-right mb-4 container" >
-                            <button type="submit" class="btn btn-primary  shadow-sm" id="submitButton">Submit</button>
+                            <button type="button" class="btn btn-primary px-4" id="submit">
+                                <span class="fa fa-save"></span> Save
+                            </button>
                         </div>
             </form>
         </div>
@@ -600,102 +629,69 @@
     <script src={{asset('assets/js/min.js')}}></script>
     
 
+    @section('scripts')
     <script>
+    document.addEventListener("DOMContentLoaded", function () {
         
-        $(document).ready(function () {
-            // Click event to trigger file input
+        let today = new Date().toISOString().split('T')[0];
         
+        
+        document.getElementById("studentDate").value = today;
+    });
+     
+        $(document).ready(function() {
+           
+    
+            $("#submit").click(function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(document.getElementById('studentForm'));
 
-            setTimeout(() => {
-                
-            }, 2000);
-
-
-            // pass the data 
-
-            // Handle form submission
-            $('#submitButton').on('click', function (e) {
-                e.preventDefault(); // Prevent default form submission
-// alert("asdsadasd")
-                // Collect form data
-                const formData = {
-                    firstName: $('#firstName').val(),
-                    lastName: $('#lastName').val(),
-                    middleName: $('#middleName').val(),
-                    studentDate: $('#studentDate').val(),
-                    address: $('#address').val(),
-                    placeOfBirth: $('#placeOfBirth').val(),
-                    Studentreligion: $('#Studentreligion').val(),
-                    studentEmail: $('#studentEmail').val(),
-                    sex: $('input[name="sex"]:checked').val(),
-                    civilStatus: $('#civilStatus').val(),
-                    dateOfBirth: $('#dateOfBirth').val(),
-                    citizenship: $('#citizenship').val(),
-                    studentmobileNumber: $('#studentmobileNumber').val(),
-                    workingStudent: $('input[name="workingStudent"]:checked').val(),
-                    scholar: $('input[name="scholar"]:checked').val(),
-                    singleParent: $('input[name="singleParent"]:checked').val(),
-                    studentGuardian: $('#studentGuardian').val(),
-                    studentSponsor: $('#studentSponsor').val(),
-                    studentChildren: $('#studentChildren').val(),
-                    studentBrothers: $('#studentBrothers').val(),
-                    fatherName: $('#fatherName').val(),
-                    fatherAge: $('#fatherAge').val(),
-                    fatherAddress: $('#fatherAddress').val(),
-                    fatherEducation: $('#fatherEducation').val(),
-                    fatherOccupation: $('#fatherOccupation').val(),
-                    fatherMobile: $('#fatherMobile').val(),
-                    studentSister: $('#studentSister').val(),
-                    motherName: $('#motherName').val(),
-                    motherAge: $('#motherAge').val(),
-                    motherAddress: $('#motherAddress').val(),
-                    motherEducation: $('#motherEducation').val(),
-                    motherOccupation: $('#motherOccupation').val(),
-                    motherMobile: $('#motherMobile').val(),
-                    elementaryName: $('#elementaryName').val(),
-                    elementarySubject: $('#elementarySubject').val(),
-                    juniorHighName: $('#juniorHighName').val(),
-                    juniorHighSubject: $('#juniorHighSubject').val(),
-                    grade11Name: $('#grade11Name').val(),
-                    grade11Subject: $('#grade11Subject').val(),
-                    grade12Name: $('#grade12Name').val(),
-                    grade12Subject: $('#grade12Subject').val(),
-                    collegeName: $('#collegeName').val(),
-                    collegeSubject: $('#collegeSubject').val(),
-                    easiestSubjects: $('#easiestSubjects input').val(),
-                    mostDifficultSubjects: $('#mostDifficultSubjects input').val(),
-                    lowestGrades: $('#lowestGrades input').val(),
-                    planAfterHighSchool: $('#planAfterHighSchool input').val(),
-                    highestGrades: $('#highestGrades input').val(),
-                    awards: $('#awards input').val(),
-                    emergencyContact: $('#emergencyContact input').val(),
-                };
-
-
-                console.log(formData);
-                
-                // Send data via AJAX
-                $.ajax({
-                    url: "{{ url('student/studentFormSave') }}",
-                    method: 'POST',
-                    data: JSON.stringify(formData),
-                    contentType: 'application/json',
-                    success: function (response) {
-                        alert('Form submitted successfully!');
-                        console.log(response); // Handle success response
-                    },
-                    error: function (xhr, status, error) {
-                        alert('An error occurred while submitting the form.');
-                        console.error(error); // Handle error
+            $.ajax({
+                url: "{{ url('student/create_pds') }}",
+                type: 'POST',
+                data: formData,
+                processData: false, 
+                contentType: false, 
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Student Personal Data Sheet successfully saved!',
+                            showConfirmButton: false,
+                            timer: 3000
+                        }).then(function() {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Failed to save student.',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
                     }
-                });
+                },
+                error: function(response) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'An error occurred while saving students.',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }
             });
         });
 
-
-
-
-
+            
+    
+    
+        });
     </script>
+    @stop
+    
 </body>
 </html>

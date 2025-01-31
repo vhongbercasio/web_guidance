@@ -1,6 +1,6 @@
 @extends('site/layouts/main')
 
-ELEM
+
 @stop
 
 

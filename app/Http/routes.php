@@ -6,11 +6,14 @@ Route::get('/', 'WelcomeController@index');
 Route::get('home', 'HomeController@index');
 
 Route::get('/studentForm', 'StudentController@index');
+Route::post('student/create_pds', 'StudentController@createPds');
 
 // Route::pos
 
 Route::post('student/studentFormSave', 'StudentController@store');
 
+
+Route::get('admin/student_pds', 'AdminController@getStudentPds');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

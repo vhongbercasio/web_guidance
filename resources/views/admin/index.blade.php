@@ -1,6 +1,4 @@
 @extends('site/layouts/main')
-
-ELEM
 @stop
 
 
@@ -133,7 +131,7 @@ ELEM
 
 		<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 
-		<div class="card mb-3">
+		    <div class="card mb-3">
             <div class="card-body">
               <div class="row flex-between-center">
                 <div class="col-md">
@@ -142,6 +140,23 @@ ELEM
               </div>
             </div>
           </div>
+
+          <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Student Personal Data Sheet</h5>
+                <table id="studentTable" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be fetched and populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
 
 
         
@@ -154,178 +169,24 @@ ELEM
 
 @section('scripts')
 <script>
-
-  var viewScheduleCalendar = "{{ url('admin/view_schedule_calendar') }}";
-  var getAttendanceUrl = "{{ url('admin/get_attendance') }}";
-
-  let datePicker;
-  // const holidays = new Set();
-
-  // document.addEventListener('DOMContentLoaded', function() {
-  //   datePicker = flatpickr("#datepickerVal", {
-  //     mode: "multiple",  
-  //     dateFormat: "Y-m-d",
-  //   });
-  // });
-
+ var oTable;
+$(document).ready(function() {
   
-
-  
-
-  // document.getElementById('saveScheduleBtn').addEventListener('click', function() {
-  //   if (!datePicker) {
-  //     iziToast.error({
-  //       title: 'Error',
-  //       message: 'DatePicker is not initialized.',
-  //       position: 'topRight'
-  //     });
-  //     return;
-  //   }
-
-  //   let selectedDates = datePicker.selectedDates.map(date => {
-  //     console.log("Selected Date (Original):", date);
-  //     let localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-  //     console.log("Selected Date (Local):", localDate);
-  //     return localDate.toISOString().split('T')[0]; 
-  //   });
-
-  //   console.log("Formatted Dates Array:", selectedDates); 
-
-  //   if (selectedDates.length === 0) {
-  //     iziToast.warning({
-  //       title: 'Warning',
-  //       message: 'Please select at least one date.',
-  //       position: 'topRight'
-  //     });
-  //     return;
-  //   }
-
-  //   let termId = document.getElementById('term_id').value;
-
-  //   $.ajax({
-  //     url: "{{ url('admin/save_schedule_calendar') }}", 
-  //     method: 'POST',
-  //     data: {
-  //       dates: selectedDates,
-  //       term_id: termId,
-  //       _token: '{{ csrf_token() }}' 
-  //     },
-  //     success: function(response) {
-  //       iziToast.success({
-  //         title: 'Success',
-  //         message: 'Schedule saved successfully!',
-  //         position: 'topRight'
-  //       });
-
-  //       datePicker.clear(); 
-  //       location.reload();
-
-  //       document.getElementById('term_id').selectedIndex = 0; 
-
-  //       $('#addScheduleCalendar').modal('hide'); 
-  //     },
-  //     error: function(error) {
-  //       iziToast.error({
-  //         title: 'Error',
-  //         message: 'Error saving schedule.',
-  //         position: 'topRight'
-  //       });
-  //     }
-  //   });
-  // });
-
-  document.addEventListener('DOMContentLoaded', function() {
-    const holidays = new Set();
-
-    const datePicker = flatpickr("#datepickerVal", {
-        mode: "multiple",  
-        dateFormat: "Y-m-d",
-        onDayCreate: function(dObj, dStr, fp, dayElem) {
-  
-            if (holidays.has(dayElem.dateObj.toISOString().split('T')[0])) {
-                dayElem.classList.add('holiday');
-                dayElem.title = 'Holiday';
-            }
-
-       
-            dayElem.addEventListener('dblclick', function() {
-                const dateStr = dayElem.dateObj.toISOString().split('T')[0];
-                if (holidays.has(dateStr)) {
-                    holidays.delete(dateStr); 
-                    dayElem.classList.remove('holiday');
-                } else {
-                    holidays.add(dateStr); 
-                    dayElem.classList.add('holiday'); 
-                    dayElem.title = 'Holiday';
-                }
-            });
+    oTable = $("#studentTable").DataTable({
+        ajax: {
+            url: "{{ url('admin/student_pds') }}",
+            type: "GET",
+            data: function(d) { 
+            },
+            dataSrc: "",
         },
-    });
-
-    document.getElementById('saveScheduleBtn').addEventListener('click', function() {
-        if (!datePicker) {
-            iziToast.error({
-                title: 'Error',
-                message: 'DatePicker is not initialized.',
-                position: 'topRight'
-            });
-            return;
-        }
-
-        let selectedDates = datePicker.selectedDates.map(date => {
-            let localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-            return localDate.toISOString().split('T')[0]; 
-        });
-
-        if (selectedDates.length === 0) {
-            iziToast.warning({
-                title: 'Warning',
-                message: 'Please select at least one date.',
-                position: 'topRight'
-            });
-            return;
-        }
-
-        let termId = document.getElementById('term_id').value;
-
-        const holidaysArray = Array.from(holidays);
-
-        console.log({
-            dates: selectedDates,
-            term_id: termId,
-            holidays: holidaysArray,
-        });
-
-        $.ajax({
-            url: "{{ url('admin/save_schedule_calendar') }}", 
-            method: 'POST',
-            data: {
-                dates: selectedDates,
-                term_id: termId,
-                holidays: holidaysArray, 
-                _token: '{{ csrf_token() }}' 
+        columns: [
+            {
+                data: 'name'
             },
-            success: function(response) {
-                iziToast.success({
-                    title: 'Success',
-                    message: 'Schedule saved successfully!',
-                    position: 'topRight'
-                });
-
-                datePicker.clear(); 
-                location.reload();
-                document.getElementById('term_id').selectedIndex = 0; 
-                $('#addScheduleCalendar').modal('hide'); 
-            },
-            error: function(error) {
-                iziToast.error({
-                    title: 'Error',
-                    message: 'Error saving schedule.',
-                    position: 'topRight'
-                });
-            }
+            ],
+           
         });
-    });
 });
 
 </script>
