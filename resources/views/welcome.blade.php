@@ -9,7 +9,7 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  {{-- <link href="assets/img/favicon.png" rel="icon"> --}}
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
@@ -34,6 +34,7 @@
   <link href="{{asset('assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
   <link href="{{asset('assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
   <link href="{{asset('assets/js/min.css')}}" rel="stylesheet">
+  {{-- <link href="{{asset('assets/jquery/min.css')}}" rel="stylesheet"> --}}
 
   <link href="{{asset('assets/site/css/min.css')}}" rel="stylesheet">
   <!-- Main CSS File -->
@@ -46,6 +47,14 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+
+  <style>
+    
+    .logo-image{
+      max-height: none!important;
+    margin-right: none!important;
+    }
+  </style>
 </head>
 
 <body class="index-page">
@@ -57,7 +66,7 @@
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
       <div>
-		<img src="{{asset('assets/img/gallery/logo.png')}}" alt="" width="150px" class="img-fluid">
+		<img src="{{asset('assets/img/gallery/logo.png')}}" alt="" width="300px" class="img-fluid logo-image">
 	  </div>
       </a>
 
@@ -65,9 +74,15 @@
         <ul>
           <li><a href="#hero" class="active">Home</a></li>
           <li><a href="#about">About</a></li> 
-          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-			Student Data Form
-		  </button>
+          <li><a href="{{ url('/auth/login') }}" class="btn btn-primary btn-sm btn-lg px-4 py-2 shadow rounded-pill" >Login</a></li>
+
+          <li>
+            <a href="{{ url('/studentForm') }}" class="btn btn-primary btn-lg px-4 py-2 shadow rounded-pill">
+                <i class="bi bi-file-earmark-text"></i> Student Data Form
+            </a>
+        </li>
+          </li>
+         
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -80,7 +95,6 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
       <img src="assets/img/hero-bg-2.jpg" alt="" class="hero-bg">
-
       <div class="container">
         <div class="row gy-4 justify-content-between">
           <div class="col-lg-4 order-lg-last hero-img" data-aos="zoom-out" data-aos-delay="100">
@@ -93,8 +107,7 @@
             <h1>GOLink</h1>
             <p>A WEB-BASED SYSTEM FOR GUIDANCE OFFICE ACCUMULATIVE RECORDS AND AUTOMATED PRINT MANAGEMENT AT ANDRES SORIANO COLLEGES OF BISLIG, INC</p>
             <div class="d-flex">
-              {{-- <a href="#about" class="btn-get-started">Get Started</a>
-              <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a> --}}
+
             </div>
           </div>
 
@@ -118,8 +131,16 @@
 
     </section><!-- /Hero Section -->
 
+
+
+
+
+    
+
+
+
     <!-- About Section -->
-    <section id="about" class="about section">
+    <section id="about" class="about section" >
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="row align-items-xl-center gy-5">
@@ -136,33 +157,33 @@
 
               <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
                 <div class="icon-box">
-                  <i class="bi bi-buildings"></i>
-                  <h3>Eius provident</h3>
-                  <p>Magni repellendus vel ullam hic officia accusantium ipsa dolor omnis dolor voluptatem</p>
+                  <i class="bi bi-file-earmark-text"></i> 
+                  <h3>Record Management</h3>
+                  <p>Organizes and maintains student records efficiently</p>
                 </div>
               </div> <!-- End Icon Box -->
 
               <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
                 <div class="icon-box">
-                  <i class="bi bi-clipboard-pulse"></i>
-                  <h3>Rerum aperiam</h3>
-                  <p>Autem saepe animi et aut aspernatur culpa facere. Rerum saepe rerum voluptates quia</p>
+                  <i class="bi bi-printer"></i>
+                  <h3>Print Automation</h3>
+                  <p>Streamlines the printing process for documents.</p>
                 </div>
               </div> <!-- End Icon Box -->
 
               <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
                 <div class="icon-box">
-                  <i class="bi bi-command"></i>
-                  <h3>Veniam omnis</h3>
-                  <p>Omnis perferendis molestias culpa sed. Recusandae quas possimus. Quod consequatur corrupti</p>
+                  <i class="bi bi-gear-wide-connected"></i>
+                  <h3>Workflow Optimization</h3>
+                  <p>Enhances productivity and task managemen</p>
                 </div>
               </div> <!-- End Icon Box -->
 
               <div class="col-md-6" data-aos="fade-up" data-aos-delay="500">
                 <div class="icon-box">
-                  <i class="bi bi-graph-up-arrow"></i>
-                  <h3>Delares sapiente</h3>
-                  <p>Sint et dolor voluptas minus possimus nostrum. Reiciendis commodi eligendi omnis quideme lorenda</p>
+                  <i class="bi bi-person-check"></i>
+                  <h3>Guidance Efficiency –</h3>
+                  <p>Supports the Guidance Office in handling cases effectively.</p>
                 </div>
               </div> <!-- End Icon Box -->
 
@@ -184,13 +205,12 @@
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
           <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename">Bootslander</span>
+            <img src="{{asset('assets/img/gallery/logo.png')}}" alt="" width="250px" class="img-fluid logo-image">
           </a>
           <div class="footer-contact pt-3">
-            <p>A108 Adam Street</p>
-            <p>New York, NY 535022</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-            <p><strong>Email:</strong> <span>info@example.com</span></p>
+            <p>Andres Soriano Colleges of Bislig, Inc</p>
+            <p>Bislig city, Surigao del Sur</p>
+           
           </div>
           <div class="social-links d-flex mt-4">
             <a href=""><i class="bi bi-twitter-x"></i></a>
@@ -200,50 +220,20 @@
           </div>
         </div>
 
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Useful Links</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
-          </ul>
-        </div>
+        
 
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Our Services</h4>
-          <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
-          </ul>
-        </div>
+       
 
-        <div class="col-lg-4 col-md-12 footer-newsletter">
-          <h4>Our Newsletter</h4>
-          <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
-          <form action="forms/newsletter.php" method="post" class="php-email-form">
-            <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your subscription request has been sent. Thank you!</div>
-          </form>
-        </div>
+      
 
       </div>
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Bootslander</strong> <span>All Rights Reserved</span></p>
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">GoLink</strong> <span>All Rights Reserved</span></p>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+  
+        Designed by <a href="#">GoLink</a>
       </div>
     </div>
 
@@ -268,8 +258,27 @@
   <script src={{asset('assets/vendor/aos/aos.js')}}></script>
   <script src={{asset('assets/vendor/glightbox/js/glightbox.min.js')}}></script>
   <script src={{asset('assets/vendor/purecounter/purecounter_vanilla.js')}}></script>
+  <script src={{asset('assets/vendor/jquery/min.js')}}></script>
   <script src={{asset('assets/vendor/swiper/swiper-bundle.min.js')}}></script>
   <script src={{asset('assets/js/min.js')}}></script>
+  
+
+
+
+<script>
+   $(document).ready(function () {
+        $("#navigateButton").click(function () {
+            window.location.href = "/studentForm"; // Redirect to the Laravel route
+        });
+    });
+</script>
+
+
+
+
+
+
+
 
 
   <!-- Main JS File -->
