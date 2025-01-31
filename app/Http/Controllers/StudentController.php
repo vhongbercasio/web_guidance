@@ -22,7 +22,7 @@ class StudentController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create(Request $request)
 	{
 		//
 	}
@@ -32,9 +32,11 @@ class StudentController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request)
 	{
 		//
+
+		dd($request->all());
 	}
 
 	/**
