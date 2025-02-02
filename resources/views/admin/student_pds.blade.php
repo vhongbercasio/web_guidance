@@ -9,6 +9,18 @@
     background-color: red !important;
     color: white !important;
   }
+  #pdfUnderDevelopmentCard {
+    z-index: 9999;
+  }
+  .card {
+    border-radius: 10px;
+  }
+  .card-header {
+    border-radius: 10px 10px 0 0;
+  }
+  .card-footer {
+    border-radius: 0 0 10px 10px;
+  }
 </style>
 
 <div class="container-fluid">
@@ -76,7 +88,7 @@
 				<li class="nav-item dropdown"><a class="nav-link pe-0 ps-2" id="navbarDropdownUser" role="button"
 						data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<div class="avatar avatar-xl">
-              <img class="rounded-circle" src="{{ asset('assets/site/images/user.png') }}" alt="User Image" />
+                         <img class="rounded-circle" src="{{ asset('assets/site/images/user.png') }}" alt="User Image" />
 						</div>
 					</a>
 					<div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end py-0"
@@ -155,7 +167,7 @@
                                             <!-- First Name -->
                                             <div class="col-md-3 mb-3">
                                                 <label class="form-label" for="firstName">First Name</label>
-                                                <input type="text" id="firstName" class="form-control shadow-sm rounded" name="first_name" id="first_name" value="{{ $person->first_name }}"  readonly/>
+                                                <input type="text" id="firstName" class="form-control shadow-sm rounded" name="first_name"   value="{{ $person->first_name }}"  readonly data-id="{{ $person->id }}" />
                                             </div>
                                             <!-- Last Name -->
                                             <div class="col-md-3 mb-3">
@@ -515,6 +527,9 @@
                                 <button type="button" class="btn btn-primary px-4" id="submit">
                                     <span class="fa fa-save"></span> Save
                                 </button>
+                                <button type="button" class="btn btn-primary px-4" id="pdf">
+                                    <span class="fa fa-save"></span> pdf
+                                </button>
                             </div>
                         </div>
                     
@@ -524,24 +539,52 @@
             </div>
         </div>
 
-
+        <div id="pdfUnderDevelopmentCard" class="card shadow-lg" style="position: fixed; top: 20%; left: 50%; transform: translateX(-50%); width: 80%; max-width: 500px; display: none;">
+            <div class="card-header bg-warning">
+              <h5 class="card-title text-center mb-0">Under Development</h5>
+            </div>
+            <div class="card-body">
+              <p>This feature is currently under development. Please check back later for PDF !</p>
+            </div>
+            <div class="card-footer text-center">
+              <button class="btn btn-secondary" onclick="closePdfDevelopmentCard()">Close</button>
+            </div>
+          </div>
+          
 
         
           
 		  
 
-
+        {{-- <input type="text" id="firstName" class="form-control shadow-sm rounded" name="first_name" id="first_name"  value="{{ $person->first_name }}"  readonly data-id="{{ $person->id }}" /> --}}
 
 @stop
 
 @section('scripts')
 <script>
 
-$(document).ready(function() {
-  
-  
+document.getElementById('pdf').addEventListener('click', function() {
+    document.getElementById('pdfUnderDevelopmentCard').style.display = 'block';
+  });
 
-});
+  // Function to close the PDF Under Development card
+  function closePdfDevelopmentCard() {
+    document.getElementById('pdfUnderDevelopmentCard').style.display = 'none';
+  }
+// $(document).ready(function() {
+
+//     $('#pdf').on('click', function() {
+//         let student_id = $('#firstName').data('id');
+//             console.log(student_id);
+
+
+//     window.open(
+//         "{{ url('admin/student_profilePDF') }}" + '?student_id=' + student_id, 
+//         '_blank'
+//     );
+// });
+
+
 
 </script>
 

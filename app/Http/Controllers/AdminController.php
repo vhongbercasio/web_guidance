@@ -60,7 +60,7 @@ class AdminController extends Controller {
 
 
 
-		return view('admin.student_pds',compact('religion_list','citizenship_list','civil_status_list','person','famiy_background','education_background','other_survey','survey'));
+		return view('admin.student_pds',compact('religion_list','citizenship_list','civil_status_list','person','famiy_background','education_background','other_survey','survey', 'person_id' ));
 	}
 	
 	/**
@@ -68,9 +68,68 @@ class AdminController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function studenPDF(Request $request)
 	{
 		//
+
+		$student_id = \Request::get('student_id');
+		
+
+		// dd($student_id);
+		$student = Person::leftJoin('gender', 'person.gender_id', '=', 'gender.id')
+		->leftJoin('civil_status', 'person.civil_status_id', '=', 'civil_status.id')
+		->leftJoin('citizenship', 'person.citizenship_id', '=', 'citizenship.id')
+		->leftJoin('religion', 'person.religion_id', '=', 'religion.id')
+		->leftJoin('family_background', 'person.family_background_id', '=', 'family_background.person_id')
+		->leftJoin('educational_background', 'person.educational_background_id', '=', 'educational_background.person_id')
+		->leftJoin('other_survey', 'person.other_survey_id', '=', 'other_survey.person_id')
+		->leftJoin('survey', 'person.survey_id', '=', 'survey.person_id') // Fixed spacing
+		->where('person.id', $student_id)
+		->select([
+			'person.first_name',
+			'person.last_name',
+			'person.middle_name',
+			'gender.name as gender',
+			'civil_status.civil_status_name',
+			'person.mobile_number',
+			'citizenship.citizenship_name',
+			'person.address',
+			'person.place_of_birth',
+			'religion.religion_name',
+			'survey.*',
+			// 'survey.working_student',
+			// 'survey.guardian',
+			// 'survey.scholar',
+			// 'survey.sponsor',
+			// 'survey.single_parent',
+			// 'survey.married',
+		])
+		->first(); // Use first() instead of get() if expecting one record
+
+
+
+	
+
+dd($student);
+
+
+		// $student = Person::join('gender', 'person.gender_id', '=', 'gender.id')
+		// 		// ->join('civil_status', 'person.civil_status_id', '=', 'civil_status.id')
+		// 		// ->join('citizenship', 'person.citizenship_id', '=', 'citizenship.id')
+		// 		// ->join('religion', 'person.religion_id', '=', 'religion.id')
+		// 		// ->join('family_background', 'person.family_background_id', '=', 'family_background.person_id')
+		// 		// ->join('educational_background', 'person.educational_background_id', '=', 'educational_background.person_id')
+		// 		// ->join('other_survey', 'person.other_survey_id', '=', 'other_survey.person_id')
+		// 		->where('person.id', $student_id )
+		// 		->select('person.first_name')
+		// 		->get();
+	// dd($student);
+
+		$pdf = \PDF::loadView('pdf/index', compact('resultsCertificate', 'currentDate', 'school_department' ,'term_value'))
+			->setPaper('A4', 'portrait');
+
+	
+		return $pdf->stream();   
 	}
 
 	/**

@@ -227,7 +227,7 @@
         <div class="header-container">
             <!-- Left Section: Logo & Form Label -->
             <div class="header-left">
-                <img src="{{ asset('assets/img/gallery/asclogo.png') }}" alt="ASC Logo" class="img-fluid logo" style="width: 50%;">
+                <img src="{{ asset('assets/img/gallery/asclogo.png') }}" alt="ASC Logo" class="logo" style="width: 50%;">
                 <div class="form-label">Guidance Form 1</div>
             </div>
 

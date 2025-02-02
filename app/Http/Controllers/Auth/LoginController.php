@@ -17,19 +17,23 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        // Validate the request
         $this->validate($request, [
+            'email' => 'required|email',  // Validate email format
             'password' => 'required',
         ]);
-
-        if (Auth::attempt(['name' => $request->name, 'password' => $request->password])) {
+    
+        // Attempt to authenticate with email and password
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            // Redirect to intended page after login
             return redirect()->intended('/');
         }
-
+    
+        // If authentication fails
         return back()->withErrors([
-            'name' => 'The provided credentials do not match our records.',
+            'email' => 'The provided credentials do not match our records.',
         ]);
     }
-
     public function logout()
     {
         Auth::logout();

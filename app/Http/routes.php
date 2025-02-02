@@ -15,6 +15,7 @@ Route::post('student/studentFormSave', 'StudentController@store');
 
 Route::get('admin/student_pds', 'AdminController@getStudentPds');
 Route::get('admin/student_profile', 'AdminController@getStudentProfile');
+Route::get('admin/student_profilePDF', 'AdminController@studenPDF');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

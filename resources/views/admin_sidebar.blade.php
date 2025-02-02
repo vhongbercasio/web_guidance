@@ -1,3 +1,30 @@
+<div id="underDevelopmentCard" class="card shadow-lg" style="position: fixed; top: 20%; left: 50%; transform: translateX(-50%); width: 80%; max-width: 500px; display: none;">
+  <div class="card-header bg-warning">
+    <h5 class="card-title text-center mb-0">Under Development</h5>
+  </div>
+  <div class="card-body">
+    <p>This feature is currently under development. Please check back later!</p>
+  </div>
+  <div class="card-footer text-center">
+    <button class="btn btn-secondary" onclick="closeDevelopmentCard()">Close</button>
+  </div>
+</div>
+
+<!-- Optional Styling for the Card (customize as needed) -->
+<style>
+  #underDevelopmentCard {
+    z-index: 9999;
+  }
+  .card {
+    border-radius: 10px;
+  }
+  .card-header {
+    border-radius: 10px 10px 0 0;
+  }
+  .card-footer {
+    border-radius: 0 0 10px 10px;
+  }
+</style>
 <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
     <div class="navbar-vertical-content scrollbar">
       <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
@@ -9,9 +36,40 @@
               <hr class="mb-0 navbar-vertical-divider" />
             </div>
           </div>
+
+          <a class="nav-link {{ Request::is('upload_image_file') ? 'active' : '' }}" href="javascript:void(0);" onclick="showUnderDevelopmentCard()">
+            <div class="d-flex align-items-center">
+              <span class="nav-link-icon"><span class="fas fa-calendar"></span></span>
+              <span class="nav-link-text ps-1">Anidote</span>
+            </div>
+          </a>
+          <a class="nav-link {{ Request::is('upload_image_file') ? 'active' : '' }}" href="javascript:void(0);" onclick="showUnderDevelopmentCard()">
+            <div class="d-flex align-items-center">
+              <span class="nav-link-icon"><span class="fas fa-calendar"></span></span>
+              <span class="nav-link-text ps-1">Psychology Test</span>
+            </div>
+          </a>
+          <a class="nav-link {{ Request::is('upload_image_file') ? 'active' : '' }}" href="javascript:void(0);" onclick="showUnderDevelopmentCard()">
+            <div class="d-flex align-items-center">
+              <span class="nav-link-icon"><span class="fas fa-calendar"></span></span>
+              <span class="nav-link-text ps-1">Counselling</span>
+            </div>
+          </a>
+          <a class="nav-link {{ Request::is('upload_image_file') ? 'active' : '' }}" href="javascript:void(0);" onclick="showUnderDevelopmentCard()">
+            {{-- <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-calendar"></span></span><span class="nav-link-text ps-1">Upload Image</span></div> --}}
+          </a>
+          {{-- <a class="nav-link {{ Request::is('upload_image_file') ? 'active' : '' }}" href="{{URL::to('upload_image_file')}}" role="button">
+            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-calendar"></span></span><span class="nav-link-text ps-1">Anidote</span></div>
+          </a>
+          <a class="nav-link {{ Request::is('upload_image_file') ? 'active' : '' }}" href="{{URL::to('upload_image_file')}}" role="button">
+            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-calendar"></span></span><span class="nav-link-text ps-1">psychology test</span></div>
+          </a>
           <a class="nav-link {{ Request::is('upload_image_file') ? 'active' : '' }}" href="{{URL::to('upload_image_file')}}" role="button">
             <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-calendar"></span></span><span class="nav-link-text ps-1">Upload Image</span></div>
           </a>
+          <a class="nav-link {{ Request::is('upload_image_file') ? 'active' : '' }}" href="{{URL::to('upload_image_file')}}" role="button">
+            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-calendar"></span></span><span class="nav-link-text ps-1">Upload Image</span></div>
+          </a> --}}
           {{-- <a class="nav-link {{ Request::is('admin/dashboard') ? 'active' : '' }}" href="{{URL::to('admin/dashboard')}}" role="button">
             <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-calendar"></span></span><span class="nav-link-text ps-1">Dashboard</span></div>
           </a>  
@@ -49,3 +107,17 @@
       </ul>
     </div>
   </div>
+
+
+  <script>
+    function showUnderDevelopmentCard() {
+    document.getElementById('underDevelopmentCard').style.display = 'block';
+  }
+
+  // Function to close the Under Development card
+  function closeDevelopmentCard() {
+    document.getElementById('underDevelopmentCard').style.display = 'none';
+  }
+</script>
+
+  </script>

@@ -173,6 +173,14 @@ class StudentController extends Controller {
 			'awards' => $award,
 		]);
 
+		$person->update([
+			'family_background_id' => $family_background->id,
+			'survey_id' => $survey->id,
+			'educational_background_id' => $educational_background->id,
+			'other_survey_id' => $other_survey->id,
+		]);
+
+
 		$student = Student::create([
 			'person_id' => $person->id, 
 		]);
