@@ -11,6 +11,7 @@ use App\OtherSurvey;
 use App\Person;
 use App\Religion;
 use App\Student;
+use App\Survey;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -131,6 +132,17 @@ class StudentController extends Controller {
 			'mother_mobile' => $mother_number
 		]);
 
+		$survey = Survey::create([
+			'person_id' => $person->id,
+			'working_student' => $workingStudent,
+			'scholar' => $scholar,
+			'single_parent' => $singleParent,
+			'guardian' => $who_guardian,
+			'sponsor' => $who_sponsor,
+			'children' => $many_children,
+			'married' => $married,
+		]);
+
 
 		$educational_background = EducationalBackground::create([
 			'person_id' => $person->id,
@@ -156,7 +168,7 @@ class StudentController extends Controller {
 			'easiest_sub' => $easiest,
 			'most_difficult_sub' => $most_diff_sub,
 			'sub_with_lowest' => $subj_lowest,
-			'sub_with_highest' => $subj_highest,
+			'sub_with_highest' => $subj_highest_grade,
 			'plan_after_hs' => $plan_after_hs,
 			'awards' => $award,
 		]);
@@ -172,7 +184,7 @@ class StudentController extends Controller {
 			'password' => Hash::make($person->last_name)
 		]);
 		
-		return response()->json(['success' => true, 'person' => $person, 'student' => $student, 'user' => $users, 'family_background' => $family_background, 'educational_background' => $educational_background, 'other_survey' => $other_survey]);
+		return response()->json(['success' => true, 'person' => $person, 'student' => $student, 'user' => $users, 'family_background' => $family_background, 'educational_background' => $educational_background, 'other_survey' => $other_survey, 'survey' => $survey]);
 		
 	}
 

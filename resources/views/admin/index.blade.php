@@ -187,6 +187,12 @@ $(document).ready(function() {
             ],
            
         });
+      	oTable.on("click", ".viewDetail", function() {
+        const person_id = $(this).data("person_id");
+        const url = "{{ url('admin/student_profile') }}?person_id="+person_id;
+        window.open(url);
+      });
+
 });
 
 </script>

@@ -1,8 +1,15 @@
 <?php namespace App\Http\Controllers;
 
+use App\Citizenship;
+use App\CivilStatus;
+use App\EducationalBackground;
+use App\FamilyBackground;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\OtherSurvey;
 use App\Person;
+use App\Religion;
+use App\Survey;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 
@@ -28,11 +35,32 @@ class AdminController extends Controller {
 		$datatable = $students->map(function ($student) {
 			$fullName = $student->first_name . ' ' . $student->middle_name . ' ' . $student->last_name;
 			return [
-				'name' => $fullName,
+				'name' => '<a data-person_id="'.$student->person_id.'" title="Click to view details" style="text-decoration: underline; cursor: pointer; color: #4620b1 !important;" class="viewDetail">'.$fullName.'</a>',
 			];
 		});
 	
 		return response()->json($datatable);
+	}
+
+	public function getStudentProfile()
+	{
+		$person_id = \Request::get('person_id');
+
+		$person = Person::find($person_id);
+
+		$religion_list = Religion::all();
+		$citizenship_list = Citizenship::all();
+		$civil_status_list = CivilStatus::all();
+
+		$famiy_background = FamilyBackground::where('person_id', $person->id)->first();
+		$education_background = EducationalBackground::where('person_id', $person->id)->first();
+		$survey = Survey::where('person_id', $person->id)->first();
+		$other_survey = OtherSurvey::where('person_id', $person->id)->first();
+		// dd($education_background);
+
+
+
+		return view('admin.student_pds',compact('religion_list','citizenship_list','civil_status_list','person','famiy_background','education_background','other_survey','survey'));
 	}
 	
 	/**
